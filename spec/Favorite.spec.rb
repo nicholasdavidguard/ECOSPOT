@@ -34,7 +34,7 @@ RSpec.describe "User or Admin can have favorite Spot/s" , type: :feature   do
         click_on 'Search'
         expect(page).to have_content("Bosco")
 
-        post :toggle_favorite 
+        post '/spots/7/toggle_favorite' 
 
         click_on "Favorites"
 
