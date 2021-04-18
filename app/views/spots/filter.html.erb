@@ -1,0 +1,164 @@
+<h1>Ecospot</h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/spots">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="myspots">My Spots</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="myfavorites"> Favorites </a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">About us</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Contacts</a>
+      </li>
+      <li>
+        <%= button_to "Add new Spot", new_spot_path, :method => "get" , :class => "btn btn-info" %>
+      </li>
+      
+    </ul>
+
+    <%= form_tag(search_page_path, 
+             :method => "get", 
+             :class=>"form-inline my-2 my-lg-0") do %>
+  <%= text_field_tag :search, 
+                      params[:search], 
+                      placeholder: "Search Spots", 
+                      class: "form-control mr-sm-2" %>
+
+    <span class="input-group-btn">
+      <%= submit_tag "Search", class: 'btn btn-info' %>
+    </span>
+<% end %>
+  </div>
+</nav>
+
+
+
+<div class="container-lg" style="max-width: 100%" >
+  <div class="row" >
+    <div class="col">
+      <h2>Favorites</h2>
+    </div>
+    <div class="col">
+      
+    </div>
+    <div class="col" style="text-align: right">
+      <% if user_signed_in? %>
+        <p>Logged in as <%= current_user.name %></p>
+
+      <div class="btn-group" role="group">
+        <%= button_to "Edit Profile",edit_user_registration_path, :method => "get" , :class => "btn btn-info" %>
+        <%= button_to "Logout",destroy_user_session_path, :method => "delete" , :class => "btn btn-info" %> 
+      </div>
+      <% else %>
+
+       
+       <%= button_to "Login",user_session_path, :method => "get" , :class => "btn btn-info btn-lg" %>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+      
+<div id="order-by">
+  <form>
+    <select class="form-control" style="width: 10%" name="sort">
+      
+      
+      <option value="newest"> Newest </option>
+      <option value="oldest">Oldest </option>
+      <option value="alphabetical">Alphabetical</option>
+    </select>
+
+    <input type="submit" value="Sort"/>
+  </form>
+</div>     
+
+
+  <div class="cards-list">
+   <% @favorite_spots.each do |spot| %>
+     
+       <div class="card 1" style="margin-bottom: 120px">
+         <div class="card_image">
+         <% if spot.image.attached? %>
+          <%= link_to image_tag(spot.image), spot_path(spot) %>
+         <% else %>
+          <%= link_to image_tag("no-image.png"), spot_path(spot) %>
+         <% end %>
+         </div>
+         <div class="card_title">
+           <p>
+             <%= spot.name %> 
+           </p>
+           <p>
+             <%= spot.location %>
+           </p>
+           <div class="container">
+           <div class="row">
+            <div class="col">
+              
+              
+              
+              
+              
+              <% if current_user.liked? spot%>
+              
+               <%= link_to like_spot_path(spot,'like'),style: "color: green" ,class: "fa fa-leaf", method: :put, remote: :true do%> 
+               <%end%>
+
+              <%else%>
+                <%= link_to like_spot_path(spot,'like') ,class: "fa fa-leaf", method: :put, remote: :true do%>
+              <% end %>
+              <%end%>
+            
+              
+            
+            </div>
+            <div class="col">
+              <% if current_user.disliked? spot%>
+                <%= link_to like_spot_path(spot,'dislike'),style: "color: red" ,class: "fa fa-exclamation-circle", method: :put, remote: :true do%>  
+                <% end %>
+              <%else%>
+                <%= link_to like_spot_path(spot,'dislike') ,class: "fa fa-exclamation-circle", method: :put, remote: :true do%>  
+              <%end%>
+              <%end%>
+
+             
+            </div>
+             <%= link_to toggle_favorite_spot_path(spot), remote: true,  method: :post do %>
+                <%= render 'spots/like_button', spot: spot%>
+             <% end %>
+            </div>
+            <div class=row>
+              <div class=col>
+                <span class="likes-count" id="spot-<%= spot.id %>">
+                <%= spot.get_likes.size %> 
+                
+              </span>
+              </div>
+              <div class="col">
+                <span class="dislikes-count" id="spot-<%= spot.id %>">
+                  <%= spot.get_dislikes.size %>
+                </span>
+                
+              </div>
+            </div>
+           
+           </div>
+          
+         </div>
+       </div>
+     
+
+  
+   <% end %>
+  </div>
+</div>

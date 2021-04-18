@@ -1,0 +1,18 @@
+
+var spotId = '<%= @spot.id%>'
+
+
+
+function toggleLikeButton(spotId, favoritedSpot) {
+  let likeButton = document.querySelector(`.like-icon[data-id='${spotId}']`)
+  likeButton.classList.toggle('red');
+  if (likeButton.classList.contains('red')) {
+    const favoriteList = document.querySelector('.favorites');
+    favoriteList.insertAdjacentHTML('beforeend', favoritedSpot)
+  }
+  else {
+    document.querySelector(`.favorite[data-id='${spotId}']`).remove()
+  }
+}
+
+toggleLikeButton(spotId, '<%= j render "spots/spot", spot: @spot %>');

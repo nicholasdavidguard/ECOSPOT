@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+<h2> Details about <%= @user.name%> </h2>
+
+<div class="container" , style="max-width: 2000px">
+  <div class="row">
+
+  <div class="col">
+        <% if @user.avatar.attached? %>
+          
+            <%= image_tag(@user.avatar, style:"border-radius: 100%; width: 300px; height: 300px; ") %>
+          
+        <% else %>
+          
+            <%= image_tag("avatar.png", style:"border-radius: 100%; width: 300px; height: 300px; ")%>
+          
+        <% end %>
+
+        <%= button_to "Edit Profile",edit_user_registration_path, :method => "get" , :class => "btn btn-info" %>
+       <p> <%= link_to "Back", spots_path%>  </p>
+  </div>
+      <div class="col">
+
+        <p>
+            <strong>Name:</strong>
+        <%= @user.name %>
+        </p>
+
+        <br>
+
+        <p>
+        <strong>Surname:</strong>
+        <%= @user.surname %>
+        </p>
+        <br>
+
+        <p>
+        <strong>Date of Birth:</strong>
+        <%= @user.date.strftime('%d-%m-%Y')%> 
+        </p>
+
+        <br>
+
+        <p>
+        <strong>Place:</strong>
+        <%= @user.place %>
+        </p>
+
+        <br>
+
+        <p>
+        <strong>Email:</strong>
+        <%= @user.email %>
+        </p>
+    </div>
+  <div class="col">
+  </div>
+</div>
+
+
+<% end %>
+</div>

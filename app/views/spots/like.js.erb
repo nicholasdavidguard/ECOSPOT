@@ -1,0 +1,10 @@
+$("#spot-<%= @spot.id %>").addClass("liked").html('<%= @spot.get_upvotes.size %>');
+
+ $('.likes-count').on('ajax:success', function(){
+    $(this).addClass("liked").html('<%= @spot.get_likes.size %>');
+    }
+
+ $('.dislikes-count').on('ajax:success', function(){
+    $(this).addClass("disliked").html('<%= @spot.get_dislikes.size %>');
+}
+ 
