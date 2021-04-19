@@ -15,7 +15,11 @@
           
         <% end %>
 
+        <% if current_user.id == @user.id%>
+
         <%= button_to "Edit Profile",edit_user_registration_path, :method => "get" , :class => "btn btn-info" %>
+
+        <% end %>
        <p> <%= link_to "Back", spots_path%>  </p>
   </div>
       <div class="col">
@@ -56,6 +60,4 @@
   </div>
 </div>
 
-
-<% end %>
 </div>

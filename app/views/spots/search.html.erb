@@ -13,12 +13,6 @@
       <li class="nav-item active">
         <a class="nav-link" href="myfavorites"> Favorites </a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">About us</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Contacts</a>
-      </li>
       <li>
         <%= button_to "Add new Spot", new_spot_path, :method => "get" , :class => "btn btn-info" %>
       </li>
@@ -142,9 +136,11 @@
 
              
             </div>
+            <a>
              <%= link_to toggle_favorite_spot_path(result), remote: true, id: 'favorite_id',  method: :post do %>
                 <%= render 'spots/like_button', spot: result%>
              <% end %>
+             </a>
             </div>
             <div class=row>
               <div class=col>
